@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp">
+
+
+    <ImageButton
+        android:id="@+id/playerButtonPause"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:src="@drawable/actionbar_play"
+        android:layout_toStartOf="@+id/playerButtonStop"
+        android:layout_toLeftOf="@+id/playerButtonStop"
+        android:textStyle="bold" />
+
+
+    <ImageButton
+        android:id="@+id/playerButtonStop"
+        android:layout_width="36dp"
+        android:src="@drawable/actionbar_stop"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp" />
+
+    <SeekBar
+        android:id="@+id/playerSeekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/playerButtonPause"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/playerButtonPause"
+        android:layout_toLeftOf="@+id/playerButtonPause" />
+
+    <TextView
+        android:id="@+id/playerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/playerSeekBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="1dp"
+        android:layout_toStartOf="@+id/playerTime"
+        android:layout_toLeftOf="@+id/playerTime"
+        android:text="《安静的夜》- 本兮"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/playerTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/playerButtonPause"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_toStartOf="@+id/playerButtonPause"
+        android:layout_toLeftOf="@+id/playerButtonPause"
+        android:text="4:35"
+        android:textSize="12sp" />
+
+
+</RelativeLayout>
