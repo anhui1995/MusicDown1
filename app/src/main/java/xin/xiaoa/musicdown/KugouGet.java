@@ -68,7 +68,6 @@ public class KugouGet {
             conn.setConnectTimeout(6 * 1000);
             //请求成功之后，服务器会返回一个响应码。如果是GET方式请求，服务器返回的响应码是200，post请求服务器返回的响应码是206（貌似）。
 
-            System.out.println("12");
             if (conn.getResponseCode() == 200) {
                 //返回码为真
                 //从服务器传递过来数据，是一个输入的动作。定义一个输入流，获取从服务器返回的数据
