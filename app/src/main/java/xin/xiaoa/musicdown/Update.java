@@ -21,9 +21,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -82,12 +79,15 @@ public class Update {
 
 
     private void opendownJson(){
-        // System.out.println("openListJson");
+         System.out.println("OKOKOKOKOKOOKOKOOOOKO");
         try{
             int versionCode = jsonObj.getInt("versionCode");  //获取服务器版本代码
             String versionContent = jsonObj.getString("versionContent");  //获取本次更新内容
             if(versionCode>MDApplication.getVersionCode()){ // 对比版本号
                 askDialog(versionCode,false,versionContent); //询问是否更新
+            }
+            else {
+                liveNum();
             }
         }catch(Exception e){
             System.out.println("opendownJson错误-"+e);
@@ -140,6 +140,7 @@ public class Update {
     }
 
     private void getVersionCode(){//创建线程,获取服务器版本  getVersionCodeThread();
+
         new GetVersionCodeThread().start();
     }
 
@@ -147,6 +148,7 @@ public class Update {
         @Override
         public void run() {
             super.run();
+
             getVersionCodeThread();
         }
     }
@@ -180,10 +182,48 @@ public class Update {
 //        Uri installUri = Uri.fromParts("package", "xxx", null);
 //        returnIt = new Intent(Intent.ACTION_PACKAGE_ADDED, installUri);
     }
+    //更新活跃度
+    void liveNum(){
+        System.out.println("NO_Update");
+        int userID= PreferencesUtils.getSharePreInt(context, "userID");//用户名
+        System.out.println("userID:"+userID);
+    }
+    //获取用户id
+    private void getUserID(){
+
+        String urlString = MDApplication.getDownVersionCodeUrl();
+        BufferedReader reader ;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(6 * 1000);
+            if (conn.getResponseCode() == 200) {
+                InputStream is = conn.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String strRead ;
+                while ((strRead = reader.readLine()) != null) {
+                    stringBuilder.append(strRead);
+                    stringBuilder.append("\n");
+                }
+                reader.close();
+                String result = stringBuilder.toString();
+
+                is.close();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @TargetApi(Build.VERSION_CODES.P)
     void checkUpdate(){
        //                       MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName()
+
         if(fileIsExists(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName())){ //已经下载某一版本
 
             PackageManager pm = context.getPackageManager();
@@ -199,6 +239,7 @@ public class Update {
                 deletefile(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName());
                 //检查服务器
                 //System.out.println("文件存在,不重新下载检查服务器");
+
                 getVersionCode();
             }
         }
@@ -272,13 +313,14 @@ public class Update {
                 //当前版本设为服务器版本
                 PreferencesUtils.putSharePre(context, "versionCode", versionCode);
                 MDApplication.setVersionCode(versionCode);
+                liveNum();
             }
         });
 
         dialog.setPositiveButton("暂时忽略更新", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which)
             {
-            //空着就行
+                liveNum();
             }
         });
 
