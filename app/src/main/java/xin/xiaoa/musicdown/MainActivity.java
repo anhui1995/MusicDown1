@@ -232,9 +232,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //  版本控制 versionCode
     void versionControl (){
-        MDApplication.setDownUpdateUrl("http://www.xiaoa.xin/download/musicdown.apk");
+        MDApplication.setDownUpdateUrl("https://www.xiaoa.xin/download/musicdown.apk");
         MDApplication.setDownUpdateFileName("musicdown.apk");
-        MDApplication.setDownVersionCodeUrl("http://www.xiaoa.xin/download/");
+        MDApplication.setDownVersionCodeUrl("https://www.xiaoa.xin/download/");
         int saveVersionCode= PreferencesUtils.getSharePreInt(this, "versionCode");//用户名
         int ApkVersionCode = APKVersionCodeUtils.getVersionCode(this);
         System.out.println(ApkVersionCode+">"+saveVersionCode);
