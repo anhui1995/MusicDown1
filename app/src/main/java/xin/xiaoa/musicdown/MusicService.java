@@ -260,9 +260,6 @@ public class MusicService extends Service {
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
         remoteViews.setTextViewText(R.id.notificationname, MDApplication.getNotificationName());         // 设置标题显示
         remoteViews.setTextViewText(R.id.notificationauthor, MDApplication.getNotificationAuthor());         // 设置歌手显示
-//        remoteViews.setTextViewText(R.id.notificationtime, strTime);         // 设置时间显示
-//        contentViews.setOnClickPendingIntent(R.id.notificationplaytag, pi);
-//        contentViews.setOnClickPendingIntent(R.id.notificationcurrentmusic, pi);
 
         //播放/暂停添加点击监听
         Intent playPauseButtonIntent = new Intent(MUSICDOWN_ACTION_PLAY_AND_PAUSE);
