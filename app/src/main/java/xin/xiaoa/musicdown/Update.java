@@ -79,7 +79,6 @@ public class Update {
 
 
     private void opendownJson(){
-         System.out.println("OKOKOKOKOKOOKOKOOOOKO");
         try{
             int versionCode = jsonObj.getInt("versionCode");  //获取服务器版本代码
             String versionContent = jsonObj.getString("versionContent");  //获取本次更新内容
@@ -184,14 +183,30 @@ public class Update {
     }
     //更新活跃度
     void liveNum(){
-        System.out.println("NO_Update");
-        int userID= PreferencesUtils.getSharePreInt(context, "userID");//用户名
-        System.out.println("userID:"+userID);
+       new Thread(){
+           @Override
+           public void run() {
+               super.run();
+               System.out.println("NO_Update");
+               int userID= PreferencesUtils.getSharePreInt(context, "userID");//用户名
+//               PreferencesUtils.putSharePre(context, "userID", 0);
+               if(userID==0){//需要新建账户
+                   addSql("adduser.php");
+               }
+               else{//直接更新活跃度
+                   addSql("addlive.php?user_id="+userID);
+               }
+               System.out.println("userID:"+userID);
+           }
+       }.start();
+
     }
     //获取用户id
-    private void getUserID(){
+    private void addSql(String checkurl){
 
-        String urlString = MDApplication.getDownVersionCodeUrl();
+        String urlString = MDApplication.getDownVersionCodeUrl()+checkurl;
+        System.out.println("urlString:"+urlString);
+
         BufferedReader reader ;
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -200,23 +215,36 @@ public class Update {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(6 * 1000);
+            System.out.println("conn.getResponseCode()"+conn.getResponseCode());
             if (conn.getResponseCode() == 200) {
                 InputStream is = conn.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 String strRead ;
                 while ((strRead = reader.readLine()) != null) {
                     stringBuilder.append(strRead);
-                    stringBuilder.append("\n");
                 }
                 reader.close();
                 String result = stringBuilder.toString();
 
+                if("adduser.php".equals(checkurl)){  //获取到用户ID
+                    int user_id=0;
+                    try {
+                        user_id = Integer.parseInt(result);
+                    } catch (NumberFormatException e) {
+                        System.out.println("String转INT："+e);
+                    }
+                    PreferencesUtils.putSharePre(context, "userID", user_id);
+                    System.out.println("添加用户成功"+user_id);
+                }
+                else {  //更新活跃度成功
+                    System.out.println("更新活跃度成功"+result);
+                }
                 is.close();
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.println("MalformedURLException:"+e);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("otherException:"+e);
         }
     }
 
