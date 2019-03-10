@@ -199,7 +199,6 @@ public class Update {
                System.out.println("userID:"+userID);
            }
        }.start();
-
     }
     //获取用户id
     private void addSql(String checkurl){
