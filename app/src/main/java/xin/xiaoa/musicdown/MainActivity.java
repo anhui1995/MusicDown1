@@ -47,7 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    boolean debug=true;
+    boolean debug=false;
     private static final int GET_UNKNOWN_APP_SOURCES = 10;
     ImageButton buttonSearch; //搜索按钮
     ConstraintLayout layoutSearch;
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     //请求状态码
     private static int REQUEST_PERMISSION_CODE = 1;
     private static final int INSTALL_PACKAGES_REQUEST_CODE = 3;
-    //######        ActionBar            #########
-    //********************************************#######################################################################
+
+
     private MusicService musicService;
     private SeekBar seekBar;
     private TextView musicName, playerTime;

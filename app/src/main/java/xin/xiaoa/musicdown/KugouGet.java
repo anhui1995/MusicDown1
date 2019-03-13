@@ -31,6 +31,7 @@ public class KugouGet {
 //        System.out.println("KugouGet_myMain()");
 //        //getSuchList();
 //    }
+
 //    void get(){ new MyThread().start();}
 //    class MyThread extends Thread{ public void run(){ myMain();}}
     List<MusicListItem> getFirstPage(String such){
