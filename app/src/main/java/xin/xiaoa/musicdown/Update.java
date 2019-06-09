@@ -254,19 +254,25 @@ public class Update {
         if(fileIsExists(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName())){ //已经下载某一版本
 
             PackageManager pm = context.getPackageManager();
-            PackageInfo info = pm.getPackageArchiveInfo(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName(),
-                    PackageManager.GET_ACTIVITIES);
-            int versionCode = info.versionCode;
+            int versionCode = 0 ;
+            try{
+                PackageInfo info = pm.getPackageArchiveInfo(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName(),
+                        PackageManager.GET_ACTIVITIES);
+                versionCode = info.versionCode;
+            }
+            catch (Exception e){
+                System.out.println("已经下载的文件有问题");
+            }
             if(versionCode>MDApplication.getVersionCode()){ // 最新版已经下载，询问是否安装
                 //System.out.println("文件存在,不重新下载询问是否安装"+versionCode+">"+MDApplication.getVersionCode());
                 askDialog(versionCode,true,""); //询问是否安装
                 //return;
             }
             else{  /// 已经下载的版本不大于当前版本，直接删除, 然后去查服务器
-                deletefile(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName());
+                if(deletefile(MDApplication.getDownUpdatePath()+MDApplication.getDownUpdateFileName()))
+                    System.out.println("删除文件成功");
+                else System.out.println("删除文件失败");
                 //检查服务器
-                //System.out.println("文件存在,不重新下载检查服务器");
-
                 getVersionCode();
             }
         }

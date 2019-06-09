@@ -18,6 +18,23 @@ public class MDApplication extends Application {
 
     private static String notificationName;
     private static String notificationAuthor;
+    private static String musicFrom;
+
+
+    public static String getMusicFrom() {
+        return musicFrom;
+    }
+
+    public static void setMusicFrom(String musicFrom) {
+        MDApplication.musicFrom = musicFrom;
+    }
+
+
+
+
+
+
+
 
 
     public static String getNotificationName() {

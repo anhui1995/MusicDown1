@@ -10,9 +10,9 @@ public class DownMusicMsg {
     private String musicType;
     private String musicFrom;
     private int musicTrate;
-    private int musicTimeLength;
-    private String musicAlbumName;
-    private int musicFileSize;
+//    private int musicTimeLength;
+//    private String musicAlbumName;
+//    private int musicFileSize;
 
     public void setMusicType(String musicType) {
         this.musicType = musicType;
@@ -22,21 +22,21 @@ public class DownMusicMsg {
         return musicType;
     }
 
-    public int getMusicFileSize() {
-        return musicFileSize;
-    }
-
-    public void setMusicFileSize(int musicFileSize) {
-        this.musicFileSize = musicFileSize;
-    }
-
-    public String getMusicAlbumName() {
-        return musicAlbumName;
-    }
-
-    public void setMusicAlbumName(String musicAlbumName) {
-        this.musicAlbumName = musicAlbumName;
-    }
+//    public int getMusicFileSize() {
+//        return musicFileSize;
+//    }
+//
+//    public void setMusicFileSize(int musicFileSize) {
+//        this.musicFileSize = musicFileSize;
+//    }
+//
+//    public String getMusicAlbumName() {
+//        return musicAlbumName;
+//    }
+//
+//    public void setMusicAlbumName(String musicAlbumName) {
+//        this.musicAlbumName = musicAlbumName;
+//    }
 
     public String getMusicFrom() {return musicFrom;}
     public void setMusicFrom(String musicType) { this.musicFrom = musicType; }
@@ -45,19 +45,17 @@ public class DownMusicMsg {
         return musicTrate;
     }
 
-    public int getMusicTimeLength() {
-        return musicTimeLength;
-    }
-
-
+//    public int getMusicTimeLength() {
+//        return musicTimeLength;
+//    }
 
     public void setMusicTrate(int musicTrate) {
         this.musicTrate = musicTrate;
     }
 
-    public void setMusicTimeLength(int musicTimeLength) {
-        this.musicTimeLength = musicTimeLength;
-    }
+//    public void setMusicTimeLength(int musicTimeLength) {
+//        this.musicTimeLength = musicTimeLength;
+//    }
 
     protected void setMp3Path(String mp3Path) {
         this.mp3Path = mp3Path;

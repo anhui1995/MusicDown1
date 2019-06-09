@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
     ActionBar actionBar;
     private MusicListAdapter listAdapt;
     private List<MusicListItem> musicList = new ArrayList<>();
+    private List<SpinnerItem> spinnerList = new ArrayList<>();
     private ListView listView;
+    private Spinner spinner;
     private TextView textViewTip;
     private KugouGet kugouGet;
     DisplayMetrics dm = new DisplayMetrics();
@@ -71,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
     //请求状态码
     private static int REQUEST_PERMISSION_CODE = 1;
     private static final int INSTALL_PACKAGES_REQUEST_CODE = 3;
-
-
     private MusicService musicService;
     private SeekBar seekBar;
     private TextView musicName, playerTime;
@@ -155,10 +156,22 @@ public class MainActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         kugouGet = new KugouGet();
         init();
-
+        String musicFrom = PreferencesUtils.getSharePreStr(this, "MusicFrom");
+        System.out.println("PreferencesUtils.getSharePreStr:"+musicFrom);
+        if("".equals(musicFrom)) { //第一次打开，从未设置过spinner
+            PreferencesUtils.putSharePre(this,"MusicFrom","kugou");
+            spinner.setSelection(0);
+            MDApplication.setMusicFrom("kugou");
+            PreferencesUtils.putSharePre(contextMainActivity,"SpinnerListPos",0);
+        }
+        else {
+            int spinnerListPos = PreferencesUtils.getSharePreInt(this,"SpinnerListPos");
+            MDApplication.setMusicFrom(musicFrom);
+            spinner.setSelection(spinnerListPos);
+        }
         //为方便测试而直接搜索本兮
         if(debug){
-            textViewKeyWord.setText("本兮");
+            textViewKeyWord.setText("单色凌");
             suchStart();
         }
     }
@@ -188,6 +201,30 @@ public class MainActivity extends AppCompatActivity {
         notifyInit();
         actionBarInit();
         versionControl ();
+        spinnerInit();
+    }
+    //spinner初始化
+    void spinnerInit(){
+        spinner = findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new MySpinnerSelectListener());
+        spinnerList.add(new SpinnerItem("kugou","酷狗"));
+        spinnerList.add(new SpinnerItem("kuwo","酷我"));
+        spinnerList.add(new SpinnerItem("qq","QQ"));
+        spinnerList.add(new SpinnerItem("netease","网易"));
+        spinnerList.add(new SpinnerItem("xiami","虾米"));
+        spinner.setAdapter(new SpinnerAdapter(this, spinnerList));
+    }
+    class MySpinnerSelectListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> adapter, View view, int pos, long id) {
+            SpinnerItem item = spinnerList.get(pos);
+            String strFrom = item.getStr();
+            MDApplication.setMusicFrom(strFrom);
+            PreferencesUtils.putSharePre(contextMainActivity,"MusicFrom",strFrom);
+            PreferencesUtils.putSharePre(contextMainActivity,"SpinnerListPos",pos);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> p1) {}
     }
     //视图初始化
     void viewInit(){
@@ -468,17 +505,13 @@ public class MainActivity extends AppCompatActivity {
 
         public void myOnClick(int i, View v) {
             MusicListItem tmp = musicList.get(i);
-            if(tmp.isTheLastItem()){        //点击的是下一页
+            if(tmp.isLastItem()){        //点击的是下一页
                 new GetNextPageThread().start();
             }
             else {      //点击的是普通条目
                 downloadMusicLists = new ArrayList<>();
-                downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHash(),"普通音质"));
-                if(tmp.getMusicHash320Price()==0&& !tmp.getMusicHash320().equals(""))
-                    downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHash320(),"高品音质"));
-                if(tmp.getMusicHashSqPrice()==0&& !tmp.getMusicHashSq().equals(""))
-                    downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHashSq(),"无损音质"));
-                new DownloadMusic().downLoad(contextMainActivity,downloadMusicLists,tmp.getMusicName());
+                downloadMusicLists.add(new DownloadMusicList(tmp.getMusicID(),"《"+tmp.getMusicName()+"》"));
+                new DownloadMusic().downLoad(contextMainActivity,downloadMusicLists);
             }
         }
     };
@@ -545,14 +578,10 @@ public class MainActivity extends AppCompatActivity {
     class itemClickLongListener implements AdapterView.OnItemLongClickListener {
         public boolean onItemLongClick(AdapterView<?> adapter, View view, int i, long id) {
             MusicListItem tmp = musicList.get(i);
-            if(tmp.isTheLastItem()) return true;
+            if(tmp.isLastItem()) return true;
             downloadMusicLists = new ArrayList<>();
-            downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHash(),"普通音质"));
-            if(tmp.getMusicHash320Price()==0&& !tmp.getMusicHash320().equals(""))
-                downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHash320(),"高品音质"));
-            if(tmp.getMusicHashSqPrice()==0&& !tmp.getMusicHashSq().equals(""))
-                downloadMusicLists.add(new DownloadMusicList(tmp.getMusicHashSq(),"无损音质"));
-            new DownloadMusic().downLoad(contextMainActivity,downloadMusicLists,tmp.getMusicName());
+            downloadMusicLists.add(new DownloadMusicList(tmp.getMusicID(),"《"+tmp.getMusicName()+"》"));
+            new DownloadMusic().downLoad(contextMainActivity,downloadMusicLists);
             return true;
         }
     }
@@ -564,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
             String path = MDApplication.getDownPath()+"/"+tmp.getMusicAuthor()+"-"+tmp.getMusicName()+".mp3";
             if(fileIsExists(path))
                 startPlayLoction(path,tmp.getMusicName(),tmp.getMusicAuthor());
-            else new PlayThread(tmp.getMusicHash()).start();
+            else new PlayThread(tmp.getMusicID()).start();
         }
     }
 

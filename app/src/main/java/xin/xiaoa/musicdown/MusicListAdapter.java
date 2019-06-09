@@ -62,7 +62,7 @@ public class MusicListAdapter extends BaseAdapter {
 
             holderView.id = arg0;
 
-            if(entity.isTheLastItem()){
+            if(entity.isLastItem()){
                 arg1 = View.inflate(context, R.layout.musiclistlastitem, null);
                 holderView.itemMusicNextPage = arg1.findViewById(R.id.itemMusicNextPage);
                 holderView.itemMusicNextPage.setTag(arg0);
@@ -76,8 +76,7 @@ public class MusicListAdapter extends BaseAdapter {
                 holderView.itemMusicDown.setTag(arg0);
 
 
-                if(entity.getMusicAlbumName().equals("")) holderView.itemMusicAuthor.setText(entity.getMusicAuthor());
-                else holderView.itemMusicAuthor.setText(entity.getMusicAuthor()+" - 《"+entity.getMusicAlbumName()+"》");
+                holderView.itemMusicAuthor.setText(entity.getMusicAuthor());
                 holderView.itemMusicName.setText(entity.getMusicName());
                 holderView.itemMusicDown.setOnClickListener(mListener);
             }

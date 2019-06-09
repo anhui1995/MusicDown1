@@ -88,7 +88,6 @@ public class MusicService extends Service {
             }
         });
         try {
-
             mp.reset();
             mp.setDataSource(paht);
             //mp.setDataSource(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Music/仙剑奇侠传六-主题曲-《剑客不能说》.mp3");
@@ -105,7 +104,7 @@ public class MusicService extends Service {
             initPlayNotification(context,name,author);
             handlerPlay.postDelayed(runnable, 300);
         } catch (Exception e) {
-            System.out.println("can't asdsad"+e);
+            System.out.println("can't asdsad--"+e);
             e.printStackTrace();
         }
     }

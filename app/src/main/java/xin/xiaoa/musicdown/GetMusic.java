@@ -88,6 +88,14 @@ public class GetMusic extends Service {
         downMusicName = intent.getStringExtra("downMusicName");// 接受传递过来的参数
         downMusicPath = intent.getStringExtra("downMusicPath");// 接受传递过来的参数
         downMusicType = intent.getStringExtra("downMusicType");// 接受传递过来的参数downMusicType
+
+//        System.out.println("下载音乐downUrl"+downUrl);
+//        System.out.println("下载音乐downMusicAuthor"+downMusicAuthor);
+//        System.out.println("下载音乐downMusicName"+downMusicName);
+//        System.out.println("下载音乐downMusicPath"+downMusicPath);
+//        System.out.println("下载音乐downMusicType"+downMusicType);
+
+
         new myTast().start();// 创建一个新的线程并且启动
         return super.onStartCommand(intent, flags, startId);
 

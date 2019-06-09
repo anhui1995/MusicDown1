@@ -57,7 +57,7 @@ public class DownloadMusic {
         toastMsg=str;
         handler.sendEmptyMessage(1);
     }
-    void downLoad(Context context,List<DownloadMusicList> inLists,String musicName)
+    void downLoad(Context context,List<DownloadMusicList> inLists)
     {
         lists=inLists;
         context1=context;
@@ -74,7 +74,7 @@ public class DownloadMusic {
         listView.setOnItemClickListener(new myItemClickListener());
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 //              dialog.setIcon(R.drawable.ic_launcher);//窗口头图标
-        dialog.setTitle("下载 -- 《"+musicName +"》");//窗口名
+        dialog.setTitle("确认下载");//窗口名
         dialog.setView(listView);
 
 
