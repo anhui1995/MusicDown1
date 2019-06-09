@@ -163,7 +163,7 @@ public class KugouGet {
             }
             else System.out.println("响应码getDownMsg："+conn.getResponseCode());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,12 +180,19 @@ public class KugouGet {
         try{
             JSONObject data;
             data=json.getJSONObject(0);
-            downMusicMsg.setMusicName(data.getString("title"));  //获取歌名
-            downMusicMsg.setMusicAuthor(data.getString("author"));  //歌手名
-            downMusicMsg.setMp3Path(data.getString("url"));  //下载地址
-            downMusicMsg.setMusicFrom(data.getString("type"));  //音乐来源
-            downMusicMsg.setMusicType(".mp3");  //音乐后缀
-            downMusicMsg.setLrc(data.getString("lrc"));  //歌词
+
+            downMusicMsg.setErrorCode(data.getInt("code"));
+            if(data.getInt("code")==200){
+                downMusicMsg.setMusicName(data.getString("title"));  //获取歌名
+                downMusicMsg.setMusicAuthor(data.getString("author"));  //歌手名
+                downMusicMsg.setMp3Path(data.getString("url"));  //下载地址
+                downMusicMsg.setMusicFrom(data.getString("type"));  //音乐来源
+                downMusicMsg.setMusicType(".mp3");  //音乐后缀
+                downMusicMsg.setLrc(data.getString("lrc"));  //歌词
+            }
+            else {
+                downMusicMsg.setErrorMassge(data.getString("error"));  //获取歌名
+            }
 //            downMusicMsg.setMusicFileSize(data.getInt("filesize"));   //文件大小
 //            downMusicMsg.setMusicTimeLength(data.getInt("timelength"));  //歌曲时长
 //            System.out.println("\n歌曲信息：" +

@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //为方便测试而直接搜索本兮
         if(debug){
-            textViewKeyWord.setText("单色凌");
+            textViewKeyWord.setText("张艺兴");
             suchStart();
         }
     }
@@ -380,18 +380,21 @@ public class MainActivity extends AppCompatActivity {
     //播放在线音乐
     @SuppressLint("SetTextI18n")
     void startPlayService(String paht, String name, String author){
-       // System.out.println("在线试听4+startPlay");
-       // System.out.println("当前播放"+paht);
-        musicService = new MusicService();
-        playerButtonPause.setImageResource(R.drawable.actionbar_play);
-        musicService.setPath(paht,this,playerButtonPause,name,author);
-        MDApplication.setActionBar(actionBar);
-        musicName.setText("《"+name+"》- "+author);
-        MDApplication.setSeekBarText("《"+name+"》- "+author);
-        actionBar.show();
-        musicService.playStart();
-        seekBar.setMax(musicService.mp.getDuration());
-        handlerPlay.postDelayed(runnable, 300);
+        if(playMusicMsg.getErrorCode() == 200){
+            musicService = new MusicService();
+            playerButtonPause.setImageResource(R.drawable.actionbar_play);
+            musicService.setPath(paht,this,playerButtonPause,name,author);
+            MDApplication.setActionBar(actionBar);
+            musicName.setText("《"+name+"》- "+author);
+            MDApplication.setSeekBarText("《"+name+"》- "+author);
+            actionBar.show();
+            musicService.playStart();
+            seekBar.setMax(musicService.mp.getDuration());
+            handlerPlay.postDelayed(runnable, 300);
+        }
+        else {
+            showToast("这个曲库暂时不能试听，换个来源试试");
+        }
     }
 
     //ActionBar中按钮的点击事件

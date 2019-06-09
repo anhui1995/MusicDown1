@@ -118,9 +118,6 @@ public class DownloadMusic {
             new MyThread().start();
             //dialog.dismiss();
             dialogDis.dismiss();
-            //
-            //
-            // System.out.println("短i:"+tmp.getName());
         }
     }
     class MyThread extends Thread{
@@ -133,27 +130,24 @@ public class DownloadMusic {
     private void down(){
 
         downMusicMsg=new KugouGet().getDownMusicMsg(hash);
-        if(fileIsExists(MDApplication.getDownPath()+"/"+downMusicMsg.getMusicAuthor()+"-"+downMusicMsg.getMusicName() + ".mp3")){
-            System.out.println("文件已经存在");
-            toast(downMusicMsg.getMusicAuthor()+"-"+downMusicMsg.getMusicName()+downMusicMsg.getMusicType()+"已经下载");
+        if(downMusicMsg.getErrorCode() != 200){
+            toast("这个曲库暂时不能下载，换个来源试试");
         }
-        else
-//            downloadFile(MDApplication.getDownPath(),downMusicMsg.getMusicAuthor()+"-"+downMusicMsg.getMusicName() + ".mp3",downMusicMsg.getMp3Path());
-        {
-            Intent intent = new Intent(context1, GetMusic.class);
-            intent.putExtra("downUrl", downMusicMsg.getMp3Path());//传递一个参数
-            intent.putExtra("downMusicName", downMusicMsg.getMusicName());//传递一个参数
-            intent.putExtra("downMusicAuthor", downMusicMsg.getMusicAuthor());//传递一个参数
-            intent.putExtra("downMusicPath", MDApplication.getDownPath());//传递一个参数
-            intent.putExtra("downMusicType", downMusicMsg.getMusicType());//传递一个参数
-            context1.startService(intent);//开启服务
-
-//            System.out.println("下载1:"+downMusicMsg.getMp3Path());
-//            System.out.println("下载2:"+downFileName);
-//            System.out.println("####################");
+        else{
+            if(fileIsExists(MDApplication.getDownPath()+"/"+downMusicMsg.getMusicAuthor()+"-"+downMusicMsg.getMusicName() + ".mp3")){
+                System.out.println("文件已经存在");
+                toast(downMusicMsg.getMusicAuthor()+"-"+downMusicMsg.getMusicName()+downMusicMsg.getMusicType()+"已经下载");
+            }
+            else{
+                Intent intent = new Intent(context1, GetMusic.class);
+                intent.putExtra("downUrl", downMusicMsg.getMp3Path());//传递一个参数
+                intent.putExtra("downMusicName", downMusicMsg.getMusicName());//传递一个参数
+                intent.putExtra("downMusicAuthor", downMusicMsg.getMusicAuthor());//传递一个参数
+                intent.putExtra("downMusicPath", MDApplication.getDownPath());//传递一个参数
+                intent.putExtra("downMusicType", downMusicMsg.getMusicType());//传递一个参数
+                context1.startService(intent);//开启服务
+            }
         }
-
-       // MDApplication.getDownPath();
 
     }
 

@@ -10,6 +10,27 @@ public class DownMusicMsg {
     private String musicType;
     private String musicFrom;
     private int musicTrate;
+    private int errorCode;
+    private String errorMassge;
+
+
+
+    public String getErrorMassge() {
+        return errorMassge;
+    }
+
+    public void setErrorMassge(String errorMassge) {
+        this.errorMassge = errorMassge;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
 //    private int musicTimeLength;
 //    private String musicAlbumName;
 //    private int musicFileSize;

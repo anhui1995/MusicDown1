@@ -7,10 +7,12 @@
       <w>filesize</w>
       <w>hander</w>
       <w>kugou</w>
+      <w>kuwo</w>
       <w>listview</w>
       <w>loction</w>
       <w>musicdown</w>
       <w>mymp</w>
+      <w>netease</w>
       <w>notefy</w>
       <w>notificationauthor</w>
       <w>notificationname</w>
@@ -29,6 +31,7 @@
       <w>trate</w>
       <w>updateing</w>
       <w>wordmp</w>
+      <w>xiami</w>
       <w>xiaoa</w>
     </words>
   </dictionary>
