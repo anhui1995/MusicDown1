@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import xin.xiaoa.musicdown.download.DownMusicMsg;
+
 public class KugouGet {
 
     String urlType = "kugou";
@@ -52,7 +54,7 @@ public class KugouGet {
         //http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E8%96%9B%E4%B9%8B%E8%B0%A6&page=1&pagesize=20
 
        // String urlString = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=" + such+ "&page="+page+"&pagesize=15";
-        String urlString = "http://www.xiaoa.xin/musicdown/music/api.php?keyword="+such+"&filter=list&from="+from+"&page="+page+"";
+        String urlString = "https://www.xiaoa.xin/musicdown/music/api.php?keyword="+such+"&filter=list&from="+from+"&page="+page+"";
         BufferedReader reader ;
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -96,8 +98,8 @@ public class KugouGet {
 
 
 
-    void openListJson(JSONArray info){
-        System.out.println("openListJson");
+    public void openListJson(JSONArray info){
+   //     System.out.println("openListJson");
         try{
             JSONObject musicMsgTmp;
             //JSONArray info;
@@ -127,7 +129,7 @@ public class KugouGet {
         //http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E8%96%9B%E4%B9%8B%E8%B0%A6&page=1&pagesize=20
         //
         //String urlString = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + hash;
-        String urlString = "http://www.xiaoa.xin/musicdown/music/api.php?musicID="+hash+"&filter=music&from="+from;
+        String urlString = "https://www.xiaoa.xin/musicdown/music/api.php?musicID="+hash+"&filter=music&from="+from;
         System.out.println("麻婆豆腐hash:"+hash);
         BufferedReader reader ;
 
@@ -170,13 +172,13 @@ public class KugouGet {
 
     }
 
-    DownMusicMsg getDownMusicMsg(String hash){
+    public DownMusicMsg getDownMusicMsg(String hash){
         downMusicMsg = new DownMusicMsg();
         getDownMsg(hash,MDApplication.getMusicFrom());
         return downMusicMsg;
     }
 
-    void opendownJson(JSONArray json){
+    public void opendownJson(JSONArray json){
         try{
             JSONObject data;
             data=json.getJSONObject(0);
