@@ -364,7 +364,7 @@ public class Update {
     public class myTast extends Thread implements Runnable {
         @Override
         public void run() {
-            String downUrl = "http://www.xiaoa.top/download/musicdown.apk";
+            String downUrl = MDApplication.config.url+"/download/musicdown.apk";
             //System.out.println("开始下载"+downMusicName);
             // TODO Auto-generated method stub
             super.run();

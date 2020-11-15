@@ -51,7 +51,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    boolean debug=false;
+
     private static final int GET_UNKNOWN_APP_SOURCES = 10;
     ImageButton buttonSearch; //搜索按钮
     ConstraintLayout layoutSearch;
@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     void showToast(String str) {
-        Toast mToast = Toast.makeText(MainActivity.this, null, Toast.LENGTH_SHORT);
-        mToast.setText(str);
+        Toast mToast = Toast.makeText(MainActivity.this, "11", Toast.LENGTH_SHORT);
+        mToast.setText(str+"");
         mToast.show();
 
     }
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             spinner.setSelection(spinnerListPos);
         }
         //为方便测试而直接搜索本兮
-        if(debug){
+        if(MDApplication.config.debug){
             textViewKeyWord.setText("张艺兴");
             suchStart();
         }
@@ -273,9 +273,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //  版本控制 versionCode
     void versionControl (){
-        MDApplication.setDownUpdateUrl("https://www.xiaoa.top/download/musicdown.apk");
+        MDApplication.setDownUpdateUrl(MDApplication.config.url + "/download/musicdown.apk");
         MDApplication.setDownUpdateFileName("musicdown.apk");
-        MDApplication.setDownVersionCodeUrl("https://www.xiaoa.top/download/");
+        MDApplication.setDownVersionCodeUrl(MDApplication.config.url + "/download/");
         int saveVersionCode= PreferencesUtils.getSharePreInt(this, "versionCode");//用户名
         int ApkVersionCode = APKVersionCodeUtils.getVersionCode(this);
         System.out.println(ApkVersionCode+">"+saveVersionCode);

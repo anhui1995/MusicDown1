@@ -8,6 +8,7 @@ public class MDApplication extends Application {
 
 
 
+    public static Config config = new Config();
     private static String downPath;
     private static String downUpdatePath;
     private static String downUpdateFileName;
