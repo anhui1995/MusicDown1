@@ -1,6 +1,6 @@
 package xin.xiaoa.musicdown;
 
-public class MusicListItem {
+    public class MusicListItem {
 
     private String musicID;
     private String musicName;

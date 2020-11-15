@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 
 public class MDApplication extends Application {
 
+
+
     private static String downPath;
     private static String downUpdatePath;
     private static String downUpdateFileName;
@@ -20,6 +22,7 @@ public class MDApplication extends Application {
     private static String notificationAuthor;
     private static String musicFrom;
 
+    private static boolean showNotification = false;
 
     public static String getMusicFrom() {
         return musicFrom;
@@ -36,6 +39,13 @@ public class MDApplication extends Application {
 
 
 
+//    public static  boolean isShowNotification() {
+//        return showNotification;
+//    }
+//
+//    public static void setShowNotification(boolean showNotification) {
+//        MDApplication.showNotification = showNotification;
+//    }
 
     public static String getNotificationName() {
         return notificationName;
@@ -141,7 +151,7 @@ public class MDApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //初始化图片加载器相关配置
+
 
     }
 

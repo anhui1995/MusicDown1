@@ -1,4 +1,4 @@
-package xin.xiaoa.musicdown;
+package xin.xiaoa.musicdown.download;
 
 import android.content.Context;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import xin.xiaoa.musicdown.R;
+//DialogListAdapter
 public class DownloadMusicAdapter extends BaseAdapter {
 
     private Context context;

@@ -18,6 +18,8 @@ import android.widget.Toast;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 
@@ -122,7 +124,13 @@ public class GetMusic extends Service {
            // byte[] buffer = new byte[1024 * 20];
             //sendSubscribeMsg();
             try {
+                System.out.println("这里有毛线问题呀1");
+                //Important for android version 9 pie/
+                client.getConnectionManager().getSchemeRegistry().register(
+                        new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+                );
                 httpResponse = client.execute(get);
+                System.out.println("这里有毛线问题呀3");
                 long len_long = httpResponse.getEntity().getContentLength();
                 System.out.println("len_long"+len_long);
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
@@ -132,6 +140,7 @@ public class GetMusic extends Service {
 
                     inputStream = httpResponse.getEntity().getContent();
                     //准备通知
+                    System.out.println("这里有毛线问题呀2");
                     manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     while ((len = inputStream.read(data)) != -1) {
                         len_data += len;

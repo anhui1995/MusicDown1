@@ -24,9 +24,15 @@ public class MusicService extends Service {
     private RemoteViews remoteViews;
     private NotificationManager notificationManager;
     private Notification notification;
-    boolean showNotification = false;
+
     private Context context;
     ImageButton actionBarButtonPlayAndPause;
+
+    String notificationDisplayName;
+    String notificationDisplayAuthor;
+
+    public boolean showNotification = false;
+
 
     public android.os.Handler handlerPlay = new android.os.Handler();
     //通知栏刷新线程
@@ -35,7 +41,12 @@ public class MusicService extends Service {
         public void run() {
             String notificationTime = time.format(mp.getCurrentPosition()) + "/"
                + time.format(mp.getDuration());
+
             remoteViews.setTextViewText(R.id.notificationtime, notificationTime);         // 设置时间显示
+
+//            remoteViews.setTextViewText(R.id.notificationname, "《"+notificationDisplayName+"》");         // 设置标题显示
+//            remoteViews.setTextViewText(R.id.notificationauthor,notificationDisplayAuthor);         // 设置歌手显示
+
             Intent mainIntent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
             long[] vibrates = {0};
@@ -66,10 +77,13 @@ public class MusicService extends Service {
         }
     }
 
+
     //歌曲播放完成后的后续处理
     void actionBarHide(){
+
         MDApplication.getActionBar().hide();
         MDApplication.setPlay(false);
+        System.out.println("showNotification = false;    85");
         showNotification = false;
         notificationManager.cancel(5);
         unregisterReceiver(playMusicReceiver);
@@ -81,6 +95,7 @@ public class MusicService extends Service {
         context =cont;
         actionBarButtonPlayAndPause = imageButton;
         //设置歌曲播放完成监听 QWVQ
+        System.out.println("初始化播放器，准备播放音乐");
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -95,13 +110,30 @@ public class MusicService extends Service {
             mp.prepare();
             mp.start();
             MDApplication.setPlay(true);
-            showNotification = true;
+
+
+            notificationDisplayName = name;
+            notificationDisplayAuthor = author;
+
             //注册通知栏按钮事件监听
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(MUSICDOWN_ACTION_PLAY_AND_PAUSE);
             intentFilter.addAction(MUSICDOWN_ACTION_STOP);
             context.registerReceiver(playMusicReceiver,intentFilter);
+
+
+//            if(showNotification){
+//                System.out.println("换个区");
+//                notificationManager.cancel(5);
+//            }
+            System.out.println("showNotification = true;    128");
+            //showNotification = true;
+            showNotification = true;
             initPlayNotification(context,name,author);
+
+
+
+
             handlerPlay.postDelayed(runnable, 300);
         } catch (Exception e) {
             System.out.println("can't asdsad--"+e);
@@ -115,6 +147,8 @@ public class MusicService extends Service {
           //  mp.start();
     }
     public void playOrPause() {
+
+        System.out.println("暂停"+notificationDisplayName+"playOrPause()");
         if(mp.isPlaying()){
             mp.pause();
             remoteViews.setImageViewResource(R.id.notificationplayandpause, R.drawable.actionbar_pause);
@@ -126,12 +160,18 @@ public class MusicService extends Service {
         }
         handlerPlay.postDelayed(runnable, 10);
     }
-
+    public void clearNotification(){
+        System.out.println("清除通知"+notificationDisplayName);
+        showNotification = false;
+        notificationManager.cancel(5);
+    }
     public void stop() {
+        System.out.println("停止播放，清通知栏");
         try{
             if(mp != null) {
                 mp.stop();
                 MDApplication.setPlay(false);
+                System.out.println("showNotification = false;    166");
                 showNotification = false;
                 notificationManager.cancel(5);
                 context.unregisterReceiver(playMusicReceiver);
@@ -181,8 +221,16 @@ public class MusicService extends Service {
 //        }
 //    }
 
+
+    @Override
+    public void onCreate() {
+        System.out.println(" onCreate()创建"+notificationDisplayName);
+        super.onCreate();
+    }
+
     @Override
     public void onDestroy() {
+        System.out.println(" onDestroy()销毁"+notificationDisplayName);
         mp.stop();
         mp.release();
         super.onDestroy();
@@ -190,7 +238,7 @@ public class MusicService extends Service {
 //$###############################################################################################################################################################################################
     void initPlayNotification(Context context,String name,String author){
         //initNotification();
-
+        System.out.println("初始化通知栏");
         Intent mainIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
 

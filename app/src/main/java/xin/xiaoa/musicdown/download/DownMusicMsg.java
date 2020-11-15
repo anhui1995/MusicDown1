@@ -1,4 +1,4 @@
-package xin.xiaoa.musicdown;
+package xin.xiaoa.musicdown.download;
 
 public class DownMusicMsg {
 
@@ -78,7 +78,7 @@ public class DownMusicMsg {
 //        this.musicTimeLength = musicTimeLength;
 //    }
 
-    protected void setMp3Path(String mp3Path) {
+    public void setMp3Path(String mp3Path) {
         this.mp3Path = mp3Path;
     }
 

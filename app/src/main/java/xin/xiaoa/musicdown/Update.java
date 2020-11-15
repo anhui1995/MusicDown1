@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
@@ -363,10 +362,9 @@ public class Update {
 
     //下载文件的类
     public class myTast extends Thread implements Runnable {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void run() {
-            String downUrl = "http://www.xiaoa.xin/download/musicdown.apk";
+            String downUrl = "http://www.xiaoa.top/download/musicdown.apk";
             //System.out.println("开始下载"+downMusicName);
             // TODO Auto-generated method stub
             super.run();

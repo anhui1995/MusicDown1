@@ -1,9 +1,8 @@
-package xin.xiaoa.musicdown;
+package xin.xiaoa.musicdown.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.TextPaint;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import xin.xiaoa.musicdown.MusicListItem;
+import xin.xiaoa.musicdown.R;
+// LabelListAdapter
 public class MusicListAdapter extends BaseAdapter {
 
     private Context context;
@@ -114,12 +116,4 @@ public class MusicListAdapter extends BaseAdapter {
 
     }
 
-//    public static abstract class myTextListener implements View.OnTouchListener {
-//
-//        @Override
-//        public boolean onTouch(View p1, MotionEvent p2) {
-//            return myOnTouch(p1, p2, (Integer) p1.getTag());
-//        }
-//        public abstract boolean myOnTouch(View v, MotionEvent me, int a);
-//    }
 }

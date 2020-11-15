@@ -54,7 +54,7 @@ public class KugouGet {
         //http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E8%96%9B%E4%B9%8B%E8%B0%A6&page=1&pagesize=20
 
        // String urlString = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=" + such+ "&page="+page+"&pagesize=15";
-        String urlString = "https://www.xiaoa.xin/musicdown/music/api.php?keyword="+such+"&filter=list&from="+from+"&page="+page+"";
+        String urlString = "https://www.xiaoa.top/musicdown/music/api.php?keyword="+such+"&filter=list&from="+from+"&page="+page+"";
         BufferedReader reader ;
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -129,7 +129,7 @@ public class KugouGet {
         //http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E8%96%9B%E4%B9%8B%E8%B0%A6&page=1&pagesize=20
         //
         //String urlString = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + hash;
-        String urlString = "https://www.xiaoa.xin/musicdown/music/api.php?musicID="+hash+"&filter=music&from="+from;
+        String urlString = "https://www.xiaoa.top/musicdown/music/api.php?musicID="+hash+"&filter=music&from="+from;
         System.out.println("麻婆豆腐hash:"+hash);
         BufferedReader reader ;
 

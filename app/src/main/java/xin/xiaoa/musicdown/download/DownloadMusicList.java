@@ -1,4 +1,4 @@
-package xin.xiaoa.musicdown;
+package xin.xiaoa.musicdown.download;
 
 public class DownloadMusicList {
     private String hash;

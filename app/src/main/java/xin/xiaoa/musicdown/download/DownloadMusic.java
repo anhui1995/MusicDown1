@@ -1,4 +1,4 @@
-package xin.xiaoa.musicdown;
+package xin.xiaoa.musicdown.download;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -22,6 +22,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import xin.xiaoa.musicdown.GetMusic;
+import xin.xiaoa.musicdown.KugouGet;
+import xin.xiaoa.musicdown.MDApplication;
 
 public class DownloadMusic {
 
@@ -57,7 +61,7 @@ public class DownloadMusic {
         toastMsg=str;
         handler.sendEmptyMessage(1);
     }
-    void downLoad(Context context,List<DownloadMusicList> inLists)
+    public void downLoad(Context context,List<DownloadMusicList> inLists)
     {
         lists=inLists;
         context1=context;

@@ -2,7 +2,6 @@ package xin.xiaoa.musicdown;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -38,7 +37,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import  xin.xiaoa.musicdown.MusicListAdapter.myItemListener;
+import xin.xiaoa.musicdown.adapter.MusicListAdapter;
+import  xin.xiaoa.musicdown.adapter.MusicListAdapter.myItemListener;
+import xin.xiaoa.musicdown.download.DownMusicMsg;
+import xin.xiaoa.musicdown.download.DownloadMusic;
+import xin.xiaoa.musicdown.download.DownloadMusicList;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -174,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
             textViewKeyWord.setText("张艺兴");
             suchStart();
         }
+        musicService = new MusicService();
     }
     @Override
     protected void onResume() {
@@ -263,15 +267,15 @@ public class MainActivity extends AppCompatActivity {
             MDApplication.setDownPath(tmp[0] + "/DownMusic");
         }
         else System.out.println("###################$$$$$$$$$$");
-        System.out.println("文件:"+MDApplication.getDownPath());
+        System.out.println("下载得得得文件:"+MDApplication.getDownPath());
         makeRootDirectory(MDApplication.getDownPath());
         makeRootDirectory(MDApplication.getDownUpdatePath());
     }
     //  版本控制 versionCode
     void versionControl (){
-        MDApplication.setDownUpdateUrl("https://www.xiaoa.xin/download/musicdown.apk");
+        MDApplication.setDownUpdateUrl("https://www.xiaoa.top/download/musicdown.apk");
         MDApplication.setDownUpdateFileName("musicdown.apk");
-        MDApplication.setDownVersionCodeUrl("https://www.xiaoa.xin/download/");
+        MDApplication.setDownVersionCodeUrl("https://www.xiaoa.top/download/");
         int saveVersionCode= PreferencesUtils.getSharePreInt(this, "versionCode");//用户名
         int ApkVersionCode = APKVersionCodeUtils.getVersionCode(this);
         System.out.println(ApkVersionCode+">"+saveVersionCode);
@@ -366,7 +370,12 @@ public class MainActivity extends AppCompatActivity {
     void startPlayLoction(String paht, String name, String author){
        // System.out.println("在线试听4+startPlay");
         //System.out.println("当前播放"+paht);
-        musicService = new MusicService();
+
+        if(musicService.showNotification){
+            musicService.clearNotification();
+        }
+
+        //musicService = new MusicService();
         playerButtonPause.setImageResource(R.drawable.actionbar_play);
         musicService.setPath(paht,this,playerButtonPause,name,author);
         MDApplication.setActionBar(actionBar);
@@ -381,7 +390,12 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     void startPlayService(String paht, String name, String author){
         if(playMusicMsg.getErrorCode() == 200){
-            musicService = new MusicService();
+
+            if(musicService.showNotification){
+                musicService.clearNotification();
+            }
+
+            //musicService = new MusicService();
             playerButtonPause.setImageResource(R.drawable.actionbar_play);
             musicService.setPath(paht,this,playerButtonPause,name,author);
             MDApplication.setActionBar(actionBar);
